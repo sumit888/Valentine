@@ -184,9 +184,7 @@
     noBtn.addEventListener("click", () => {
 
         // 📳 Vibrate phone
-     // Vibrate for 200ms, pause for 100ms, then vibrate again for 200ms
-navigator.vibrate([200, 100, 200]);
-
+     if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
 
       message.textContent = noTexts[noCount % noTexts.length];
       noCount++;
