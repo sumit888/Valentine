@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💖 Valentine Proposal 💖</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 22px;
+      padding: 26px 22px;
+      width: 100%;
+      max-width: 420px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 1.15rem;
+      margin-bottom: 22px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #yesBtn {
+      background: #ff1e56;
+      color: white;
+      font-weight: bold;
+    }
+
+    #noBtn {
+      background: #fff;
+      color: #ff1e56;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .images {
+      margin-top: 25px;
+    }
+
+    .image-box {
+      margin-bottom: 22px;
+    }
+
+    .image-box img {
+      width: 100%;
+      border-radius: 16px;
+      border: 3px solid rgba(255,255,255,0.7);
+    }
+
+    .caption {
+      margin-top: 8px;
+      font-size: 1rem;
+      font-style: italic;
+    }
+
+    /* 💖 Hearts */
+    .heart {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall 3s linear forwards;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1 id="title">Hey Love 💕</h1>
+    <p id="message">Will you be my Valentine?</p>
+
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">Yes 💖</button>
+      <button id="noBtn">No 🙈</button>
+    </div>
+
+    <div class="images hidden" id="result">
+      <h1>Yayyy 🥰</h1>
+      <p>
+        I knew you still love me 💕<br />
+        Your gift for the day is inside my clothing 😘
+      </p>
+
+      <div class="image-box">
+        <img src="image2.jpeg" alt="Our memory 1">
+        <div class="caption">Remember from here...</div>
+      </div>
+
+      <div class="image-box">
+        <img src="image1.jpeg" alt="Our memory 2">
+        <div class="caption">...to here :D </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🎶 Romantic Song -->
+  <audio id="loveSong" src="song.mp3"></audio>
+
+  <script>
+    const noTexts = [
+      "Are you sure? 🥺",
+      "Really really sure? 💔",
+      "Think again please 😢",
+      "My heart is breaking 💘",
+      "You know you want to say YES 😏"
+    ];
+
+    let noCount = 0;
+    let yesScale = 1;
+
+    const message = document.getElementById("message");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const buttons = document.getElementById("buttons");
+    const result = document.getElementById("result");
+    const song = document.getElementById("loveSong");
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = 16 + Math.random() * 20 + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 3000);
+    }
+
+    function startConfetti() {
+      setInterval(createHeart, 200);
+    }
+
+    noBtn.addEventListener("click", () => {
+      message.textContent = noTexts[noCount % noTexts.length];
+      noCount++;
+
+      // 📳 Vibrate phone
+      if (navigator.vibrate) {
+        navigator.vibrate([100, 50, 100]);
+      }
+
+      // Make YES bigger
+      yesScale += 0.18;
+      yesBtn.style.transform = `scale(${yesScale})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      buttons.classList.add("hidden");
+      message.classList.add("hidden");
+      document.getElementById("title").classList.add("hidden");
+      result.classList.remove("hidden");
+
+      // 🎶 Play song
+      song.play();
+
+      // 💖 Hearts
+      startConfetti();
+    });
+  </script>
+</body>
+</html>
